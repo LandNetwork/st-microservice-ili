@@ -1,6 +1,7 @@
 package com.ai.st.microservice.ili.dto;
 
 import java.io.Serializable;
+import java.util.List;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -20,6 +21,7 @@ public class ValidationDto implements Serializable {
 	private String filenameTemporal;
 	private Long userCode;
 	private String observations;
+	private List<String> fullLog;
 
 	public ValidationDto() {
 
@@ -32,6 +34,16 @@ public class ValidationDto implements Serializable {
 		this.isValid = isValid;
 		this.log = log;
 		this.xtfLog = xtfLog;
+	}
+	
+	public ValidationDto(String resultId, String transfer, Boolean isValid, Boolean log, Boolean xtfLog, List<String> fullLog) {
+		super();
+		this.resultId = resultId;
+		this.transfer = transfer;
+		this.isValid = isValid;
+		this.log = log;
+		this.xtfLog = xtfLog;
+		this.fullLog = fullLog;
 	}
 
 	@ApiModelProperty(required = true, notes = "Result ID")
@@ -117,6 +129,14 @@ public class ValidationDto implements Serializable {
 
 	public void setObservations(String observations) {
 		this.observations = observations;
+	}
+
+	public List<String> getFullLog() {
+		return fullLog;
+	}
+
+	public void setFullLog(List<String> fullLog) {
+		this.fullLog = fullLog;
 	}
 
 }

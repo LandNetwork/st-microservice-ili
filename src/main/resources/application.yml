@@ -7,16 +7,21 @@ spring:
       maxRequestSize: 250MB
   main:
     allow-bean-definition-overriding: true
+  datasource:
+    url: jdbc:postgresql://localhost:54321/sistema-transicion
+    username: postgres
+    password: 123456
+    driver-class-name: org.postgresql.Driver
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQL10Dialect
-    hibernate.ddl-auto: create
+    hibernate.ddl-auto: none
     properties:
       hibernate:
         enable_lazy_load_no_trans: true
 
 eureka:
   client:
-    enabled: true
+    enabled: false
     serviceUrl:
       defaultZone: http://localhost:8761/eureka
 
@@ -24,12 +29,64 @@ server:
   port: 9005
   tomcat:
     max-threads: 0
+    
+st:
+  rabbitmq:
+    queueFiles:
+      exchange: st.exchange.files
+      queue: st.queue.files
+      routingkey: st.routingkey.files
+      concurrency: 4
+    queueIntegrations:
+      exchange: st.exchange.integrations
+      queue: st.queue.integrations
+      routingkey: st.routingkey.integrations
+      concurrency: 4
+    queueUpdateIntegration:
+      exchange: st.exchange.udpate.integrations
+      queue: st.queue.update.integrations
+      routingkey: st.routingkey.update.integrations
+      concurrency: 4
+    queueExports:
+      exchange: st.exchange.exports.xtf
+      queue: st.queue.update.exports.xtf
+      routingkey: st.routingkey.exports.xtf
+      concurrency: 4
+    queueUpdateExport:
+      exchange: st.exchange.udpate.exports
+      queue: st.queue.update.exports
+      routingkey: st.routingkey.update.exports
+      concurrency: 4
+    queueIlivalidator:
+      exchange: st.exchange.ilivalidator
+      queue: st.queue.ilivalidator
+      routingkey: st.routingkey.ilivalidator
+      concurrency: 4
+    queueUpdateStateSupply:
+      exchange: st.exchange.update.state.supply
+      queue: st.queue.update.state.supply
+      routingkey: st.routingkey.update.state.supply
+      concurrency: 4
+    queueIli:
+        exchange: st.exchange.ili
+        queue: st.queue.ili
+        routingkey: st.routingkey.ili
+        concurrency: 1
+
 
 iliProcesses:
   temporalDirectoryPrefix: "ili_process_"
-  uploadedFiles: "/opt/storage-microservice-ili/uploads"
-  downloadedFiles: "/opt/storage-microservice-ili/downloads"
-  iliDirectory: "/opt/storage-microservice-ili/ladm-col/models/2.9.6"
-  iliDirectoryPlugins: "/opt/storage-microservice-ili/ladm-col/models/2.9.6plugins"
+  
+  uploadedFiles: "/home/felipe/Projects/UT/ST/files/uploads"
+  downloadedFiles: "/home/felipe/Projects/UT/ST/files/downloads"
+  iliDirectory: "/home/felipe/Projects/UT/ST/ladm_col/models/2.9.6"
+  iliDirectoryPlugins: "/home/felipe/Projects/UT/ST/ladm_col/plugins"
+  ogrPath: /usr/bin
+  
+  #uploadedFiles: "/home/ubuntu/uploads"
+  #downloadedFiles: "/home/ubuntu/downloads"
+  #iliDirectory: "/home/ubuntu/ladm_col/models/2.9.6"
+  #iliDirectoryPlugins: "/home/ubuntu/ladm_col/models/2.9.6plugins"
+  
   models: "Cartografia_Referencia_V2_9_6;Avaluos_V2_9_6;Operacion_V2_9_6;LADM_COL_V1_2;Formulario_Catastro_V2_9_6;ISO19107_PLANAS_V1;Datos_Gestor_Catastral_V2_9_6;Datos_SNR_V2_9_6;Datos_Integracion_Insumos_V2_9_6"
   srs: "3116"
